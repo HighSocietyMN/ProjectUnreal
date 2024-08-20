@@ -14,4 +14,17 @@ class HIGHSOCIETYMN_API AKJH_GameModeBase : public AGameModeBase
 {
 	GENERATED_BODY()
 	
+public :
+	virtual void BeginPlay() override;
+
+	void ReqPostMessage(FString name, FString Message);
+	
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Http")
+	TSubclassOf<class AHttpActor> HttpFactory;
+
+	UPROPERTY()
+	class AHttpActor* HttpActor;
+
+	FString URL = TEXT("https://apis.data.go.kr/4050000/libnewbk/getLibnewbk");
+	FString Key = TEXT("GVNFlVhfOqLnclTPI4RZHguMLhgD0fhBxs8jWA8xlolxx3on2NYWMMv7hgbreLsIaBahFY7jaK0Xlto8ZGn0Iw%3D%3D");
 };
