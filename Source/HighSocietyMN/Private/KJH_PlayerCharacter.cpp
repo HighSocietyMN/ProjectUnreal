@@ -151,12 +151,10 @@ void AKJH_PlayerCharacter::OnMyActionStartRun()
 void AKJH_PlayerCharacter::OnMyActionStopRun()
 {
 	GetCharacterMovement()->MaxWalkSpeed = 300.0f;
-
 }
 
 void AKJH_PlayerCharacter::OnMyActionInteraction(const FInputActionValue& Value)
 {
-
 	//// 상호작용 1) 일반 NPC 탐색 (SweepMultiByProfile을 사용하여 블록 처리 탐색)
 	//if (bIsInteractCrowdCharacter && bIsInteractElonMusk && bIsInteractWarrenBuffett) // 이미 다른 상호작용 중이 아니라면
 	//{
@@ -191,6 +189,5 @@ void AKJH_PlayerCharacter::OnMyActionInteraction(const FInputActionValue& Value)
 	//		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("No Crowd nearby to Interact"));
 	//	}
 	//}
-
 }
 
