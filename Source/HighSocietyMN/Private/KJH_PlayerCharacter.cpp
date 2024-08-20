@@ -28,8 +28,8 @@ AKJH_PlayerCharacter::AKJH_PlayerCharacter()
 	GetMesh()->SetCollisionProfileName(TEXT("Player"));
 
 	// 기본 템플릿 ACharacterMovement 설정 -----------------------------------------------------------------------------------------------------
-	GetCharacterMovement()->MaxWalkSpeed = 600.0f;
-	GetCharacterMovement()->GravityScale = 3.0f;
+	GetCharacterMovement()->MaxWalkSpeed = 300.0f;
+	GetCharacterMovement()->GravityScale = 1.0f;
 	GetCharacterMovement()->bOrientRotationToMovement = true;
 
 	// Spring 컴포넌트 설정 --------------------------------------------------------------------------------------------------------------------
@@ -144,13 +144,13 @@ void AKJH_PlayerCharacter::OnMyActionJump(const FInputActionValue& Value)
 // 달리기 시작
 void AKJH_PlayerCharacter::OnMyActionStartRun()
 {
-	GetCharacterMovement()->MaxWalkSpeed = 900.0f;
+	GetCharacterMovement()->MaxWalkSpeed = 600.0f;
 }
 
 // 달리기 종료
 void AKJH_PlayerCharacter::OnMyActionStopRun()
 {
-	GetCharacterMovement()->MaxWalkSpeed = 600.0f;
+	GetCharacterMovement()->MaxWalkSpeed = 300.0f;
 
 }
 
