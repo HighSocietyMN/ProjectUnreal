@@ -11,6 +11,7 @@
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/Character.h"
 #include "../../../../Plugins/EnhancedInput/Source/EnhancedInput/Public/EnhancedInputComponent.h"
+#include "../../../../Plugins/EnhancedInput/Source/EnhancedInput/Public/EnhancedInputSubsystems.h"
 
 // Sets default values
 AKJH_PlayerCharacter::AKJH_PlayerCharacter()
@@ -50,12 +51,36 @@ void AKJH_PlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	// Enhanced Input Mapping Context 바인딩 
+	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
+	{
+		UEnhancedInputLocalPlayerSubsystem* SubSys =
+			ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(PlayerController->GetLocalPlayer());
+
+		if (SubSys)
+		{
+			SubSys->AddMappingContext(IMC_Player, 0);
+		}
+
+		// PlayerController가 있다면, 접근하여 카메라 최대 각도 조정
+		if (PlayerController)
+		{
+			if (PlayerController->PlayerCameraManager)
+			{
+				PlayerController->PlayerCameraManager->ViewPitchMin = -70.0f;
+				PlayerController->PlayerCameraManager->ViewPitchMax = 70.0f;
+			}
+		}
+	}
+
 }
 
 // Called every frame
 void AKJH_PlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
+
+
 
 }
 
@@ -67,18 +92,62 @@ void AKJH_PlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 
 	UEnhancedInputComponent* EnhancedInputComponent = CastChecked<UEnhancedInputComponent>(PlayerInputComponent);
 
-	//// Move 바인딩
-	//EnhancedInputComponent->BindAction(IA_Move, ETriggerEvent::Triggered, this, &AKJH_PlayerCharacter::OnMyActionMove);
+	// Move 바인딩
+	EnhancedInputComponent->BindAction(IA_Move, ETriggerEvent::Triggered, this, &AKJH_PlayerCharacter::OnMyActionMove);
 
-	//// Run 바인딩
-	//EnhancedInputComponent->BindAction(IA_StartRun, ETriggerEvent::Triggered, this, &AKJH_PlayerCharacter::OnMyActionStartRun);
-	//EnhancedInputComponent->BindAction(IA_StopRun, ETriggerEvent::Completed, this, &AKJH_PlayerCharacter::OnMyActionStopRun);
+	// Run 바인딩
+	EnhancedInputComponent->BindAction(IA_StartRun, ETriggerEvent::Triggered, this, &AKJH_PlayerCharacter::OnMyActionStartRun);
+	EnhancedInputComponent->BindAction(IA_StopRun, ETriggerEvent::Completed, this, &AKJH_PlayerCharacter::OnMyActionStopRun);
 
-	//// Look 바인딩
-	//EnhancedInputComponent->BindAction(IA_Look, ETriggerEvent::Triggered, this, &AKJH_PlayerCharacter::OnMyActionLook);
+	// Look 바인딩
+	EnhancedInputComponent->BindAction(IA_Look, ETriggerEvent::Triggered, this, &AKJH_PlayerCharacter::OnMyActionLook);
 
-	//// Jump 바인딩
-	//EnhancedInputComponent->BindAction(IA_Jump, ETriggerEvent::Started, this, &AKJH_PlayerCharacter::OnMyActionJump);
+	// Jump 바인딩
+	EnhancedInputComponent->BindAction(IA_Jump, ETriggerEvent::Started, this, &AKJH_PlayerCharacter::OnMyActionJump);
+
+}
+
+
+// 기본 움직임
+void AKJH_PlayerCharacter::OnMyActionMove(const FInputActionValue& Value)
+{
+
+	const FVector2D MovementVector = Value.Get<FVector2D>();
+	const FRotator Rotation = Controller->GetControlRotation();
+	const FRotator YawRotation(0.0f, Rotation.Yaw, 0.0f);
+
+	const FVector ForwardDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::X);
+	AddMovementInput(ForwardDirection, MovementVector.Y);
+
+	const FVector RightDirection = FRotationMatrix(YawRotation).GetUnitAxis(EAxis::Y);
+	AddMovementInput(RightDirection, MovementVector.X);
+
+}
+
+// 카메라 회전
+void AKJH_PlayerCharacter::OnMyActionLook(const FInputActionValue& Value)
+{
+	const FVector2D LookAxisVector = Value.Get<FVector2D>();
+	AddControllerPitchInput(0.5f * LookAxisVector.Y);
+	AddControllerYawInput(0.5f * LookAxisVector.X);
+}
+
+// 점프 
+void AKJH_PlayerCharacter::OnMyActionJump(const FInputActionValue& Value)
+{
+	Jump();
+}
+
+// 달리기 시작
+void AKJH_PlayerCharacter::OnMyActionStartRun()
+{
+	GetCharacterMovement()->MaxWalkSpeed = 900.0f;
+}
+
+// 달리기 종료
+void AKJH_PlayerCharacter::OnMyActionStopRun()
+{
+	GetCharacterMovement()->MaxWalkSpeed = 600.0f;
 
 }
 
