@@ -59,6 +59,9 @@ class UInputAction* IA_StartRun;
 UPROPERTY(EditAnywhere, Category = Input)
 class UInputAction* IA_StopRun;
 
+UPROPERTY(EditAnywhere, Category = Input)
+class UInputAction* IA_Interaction;
+
 ////////// Enhanced Input 관련 인풋값 종료 ------------------------------------------------------------------------------------------------------
 
 ////////// Enhanced Input 관련 함수 시작 --------------------------------------------------------------------------------------------------------
@@ -68,5 +71,12 @@ void OnMyActionJump(const FInputActionValue& Value); // 점프
 
 void OnMyActionStartRun(); // 달리기 시작
 void OnMyActionStopRun(); // 달리기 종료
+
+void OnMyActionInteraction(const FInputActionValue& Value); // 인터렉션
+
+bool bIsInteractCrowdCharacter = false;
+bool bIsInteractElonMusk = false;
+bool bIsInteractWarrenBuffett = false;
+
 
 };

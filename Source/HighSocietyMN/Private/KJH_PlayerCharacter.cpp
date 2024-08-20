@@ -105,6 +105,9 @@ void AKJH_PlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	// Jump 바인딩
 	EnhancedInputComponent->BindAction(IA_Jump, ETriggerEvent::Started, this, &AKJH_PlayerCharacter::OnMyActionJump);
 
+	// Interaction 바인딩
+	EnhancedInputComponent->BindAction(IA_Jump, ETriggerEvent::Started, this, &AKJH_PlayerCharacter::OnMyActionInteraction);
+
 }
 
 
@@ -148,6 +151,46 @@ void AKJH_PlayerCharacter::OnMyActionStartRun()
 void AKJH_PlayerCharacter::OnMyActionStopRun()
 {
 	GetCharacterMovement()->MaxWalkSpeed = 600.0f;
+
+}
+
+void AKJH_PlayerCharacter::OnMyActionInteraction(const FInputActionValue& Value)
+{
+
+	//// 상호작용 1) 일반 NPC 탐색 (SweepMultiByProfile을 사용하여 블록 처리 탐색)
+	//if (bIsInteractCrowdCharacter && bIsInteractElonMusk && bIsInteractWarrenBuffett) // 이미 다른 상호작용 중이 아니라면
+	//{
+	//	float InteractBoxRange_CrowdCharacter = 50.0f; // 상호작용 범위를 50으로 설정
+
+	//	TArray<FHitResult> HitResults_CrowdCharacter;
+	//	FCollisionShape CollisionShape_CrowdCharacter;
+	//	CollisionShape_CrowdCharacter.SetSphere(InteractBoxRange_CrowdCharacter);
+
+	//	FVector PlayerLocation_CrowdCharacter = GetActorLocation();
+
+	//	if (GetWorld()->SweepMultiByProfile(HitResults_CrowdCharacter, PlayerLocation_CrowdCharacter, PlayerLocation_CrowdCharacter, FQuat::Identity, TEXT("Crowd"), CollisionShape_CrowdCharacter))
+	//	{
+	//		for (const FHitResult& Hit : HitResults_CrowdCharacter)
+	//		{
+	//			/* 내가 만들 클래스 추가하는 부분 ex) AKJH_CrowdCharacter* OverlappingCrowdCharacter = Cast<AKJH_CrowdCharacter>(Hit.GetActor()); */
+	//			if (OverlappingCrowdCharacter)
+	//			{
+
+	//				// 상호작용 시작 시 캐릭터의 방향 고정
+	//				bUseControllerRotationYaw = false;
+
+	//				bIsInteractCrowdCharacter = true; // 터렛 상호작용 중 상태를 true로 설정
+
+
+	//				GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Green, TEXT("Crowd Interaction started"));
+	//				return;
+
+
+	//			}
+	//		}
+	//		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("No Crowd nearby to Interact"));
+	//	}
+	//}
 
 }
 
