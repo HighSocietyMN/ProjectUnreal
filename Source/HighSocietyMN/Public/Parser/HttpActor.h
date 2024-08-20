@@ -8,6 +8,8 @@
 #include "Interfaces/IHttpResponse.h"
 #include "HttpActor.generated.h"
 
+DECLARE_MULTICAST_DELEGATE_TwoParams(FOnResPostTextDelegate, FString, FString);
+
 UCLASS()
 class HIGHSOCIETYMN_API AHttpActor : public AActor
 {
@@ -25,4 +27,6 @@ public:
 
 	void ReqPostText(FString ServerURL, FString json);
 	void OnResPostText(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
+
+	FOnResPostTextDelegate OnResPostTextDelegate;
 };

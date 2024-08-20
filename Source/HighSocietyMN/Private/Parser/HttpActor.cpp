@@ -22,6 +22,9 @@ void AHttpActor::ReqPostText(FString ServerURL, FString json)
 	req->SetVerb(TEXT("POST"));
 	req->SetHeader(TEXT("content-type"), TEXT("application/json"));
 	req->SetContentAsString(json);
+	TArray<uint8> Content;
+	Content.Add(1);
+	req->SetContent(Content);
 	req->OnProcessRequestComplete().BindUObject(this, &AHttpActor::OnResPostText);
 	req->ProcessRequest();
 }
@@ -31,6 +34,7 @@ void AHttpActor::OnResPostText(FHttpRequestPtr Request, FHttpResponsePtr Respons
 	if (bWasSuccessful)
 	{
 		FString ret = Response->GetContentAsString();
+		UE_LOG(LogTemp, Warning, TEXT("OnResPostText Success... %s"), *ret);
 	}
 	else
 	{

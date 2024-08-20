@@ -8,13 +8,19 @@
 void AKJH_GameModeBase::BeginPlay()
 {
 	HttpActor = GetWorld()->SpawnActor<AHttpActor>(HttpFactory);
+
+	ReqPostMessage("KJH", "Hello World");
 }
 
 void AKJH_GameModeBase::ReqPostMessage(FString name, FString Message)
 {
 	TMap <FString, FString> studentData;
-	studentData.Add("Name", name);
-	studentData.Add("Message", Message);
+	studentData.Add("characterName", name);
+
+	TArray<uint8> Content = {0x01, 0x02, 0x03, 0x04};
+	// json to byte
+	studentData.Add("characterVoiceData", FBase64::Encode(Content));
+
 	FString json = UJsonParseLib::MakeJson(studentData);
 
 	HttpActor->ReqPostText(URL, json);

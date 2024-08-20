@@ -25,6 +25,6 @@ public :
 	UPROPERTY()
 	class AHttpActor* HttpActor;
 
-	FString URL = TEXT("https://apis.data.go.kr/4050000/libnewbk/getLibnewbk");
+	FString URL = TEXT("http://192.168.1.31:8080/api/v1/voice/process");
 	FString Key = TEXT("GVNFlVhfOqLnclTPI4RZHguMLhgD0fhBxs8jWA8xlolxx3on2NYWMMv7hgbreLsIaBahFY7jaK0Xlto8ZGn0Iw%3D%3D");
 };
