@@ -49,6 +49,9 @@ AKJH_PlayerCharacter::AKJH_PlayerCharacter()
 	TPSCamera->SetupAttachment(SpringArmComp);
 	TPSCamera->SetRelativeLocation(FVector(125, 50, 70));
 	TPSCamera->SetFieldOfView(90.0f);
+
+	// 사운드 관련 처리를 위한 초기값 설정 (FootStep Sound)
+	FootStepInterval = WalkFootStepInterval; 	// 기본적으로 걷기 간격을 초기값으로 설정
 }
 
 // Called when the game starts or when spawned
@@ -137,6 +140,24 @@ void AKJH_PlayerCharacter::Tick(float DeltaTime)
 			UIManager->UpdateInteractionUIForMusk(false); 
 	}
 
+
+	////////// SFX 관련 처리 --------------------------------------------------------------------------------------------------------------------------------------------------------
+	// FootStepSound 사운드 처리
+	// FootStepSound가 유효한지 확인
+	if (FootStepSound && GetCharacterMovement()->Velocity.Size() > 0.0f)
+	{
+		// 타이머가 설정된 경우에만 발자국 소리 재생
+		static float TimeSinceLastStep = 0.0f;
+		TimeSinceLastStep += DeltaTime;
+
+		if (TimeSinceLastStep >= FootStepInterval)
+		{
+			UGameplayStatics::PlaySoundAtLocation(this, FootStepSound, GetActorLocation());
+			TimeSinceLastStep = 0.0f;
+		}
+	}
+
+
 }
 
 // Called to bind functionality to input
@@ -200,12 +221,18 @@ void AKJH_PlayerCharacter::OnMyActionJump(const FInputActionValue& Value)
 void AKJH_PlayerCharacter::OnMyActionStartRun()
 {
 	GetCharacterMovement()->MaxWalkSpeed = 600.0f;
+
+	// 사운드 관련 처리 (FootStep Sound)
+	FootStepInterval = RunFootStepInterval; // 달리기 중에는 더 짧은 간격으로 발자국 소리를 재생
 }
 
 // 달리기 종료
 void AKJH_PlayerCharacter::OnMyActionStopRun()
 {
 	GetCharacterMovement()->MaxWalkSpeed = 300.0f;
+
+	// 사운드 관련 처리 (FootStep Sound)
+	FootStepInterval = WalkFootStepInterval; // // 걷기 간격으로 발자국 소리를 재생
 }
 
 void AKJH_PlayerCharacter::OnMyActionInteraction(const FInputActionValue& Value)
