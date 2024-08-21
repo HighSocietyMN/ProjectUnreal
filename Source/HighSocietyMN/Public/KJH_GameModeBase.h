@@ -21,7 +21,7 @@ public :
 	//void SendSoundWave(FString name, class USoundWave* SoundWave);
 	//
 	UFUNCTION(BlueprintCallable, Category = "Sound")
-	void SendSoundWaveFile(FString name, const FString& FilePath);
+	void SendSoundWaveFile(int32 index, FString name, const FString& FilePath);
 
 	bool LoadWavFileToByteArray(const FString& FilePath, TArray<uint8>& OutFileData);
 	//bool ConvertSoundWaveToByteArray(USoundWave* SoundWave, TArray<uint8>& OutAudioData);
@@ -43,6 +43,10 @@ public :
 
 	UPROPERTY()
 	class UMessageWidget* MessageWidget;
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	TArray<UTexture2D*> Icons;
+
+	int32 IconIndex = 0;
 
 	FString URL = TEXT("http://192.168.1.31:8080/api/v1/voices/process");
 	//FString URL = TEXT("http://192.168.1.55:7777/api/v1/voices/process");

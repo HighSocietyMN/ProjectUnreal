@@ -25,8 +25,9 @@ void AKJH_GameModeBase::BeginPlay()
 	// ReqPostMessage("KJH", "Hello World");
 }
 
-void AKJH_GameModeBase::SendSoundWaveFile(FString name, const FString& FilePath)
+void AKJH_GameModeBase::SendSoundWaveFile(int32 index, FString name, const FString& FilePath)
 {
+	IconIndex = index;
 	TArray<uint8> AudioData;
 	if (!LoadWavFileToByteArray(FPaths::ProjectSavedDir() / FilePath, AudioData))
 	{
@@ -75,13 +76,12 @@ void AKJH_GameModeBase::ReqPostMessage(FString name, FString Message)
 void AKJH_GameModeBase::DelegateMessage(FString Name, FString Message)
 {
 	UE_LOG(LogTemp, Warning, TEXT("DelegateMessage Name : %s, Message : %s"), *Name, *Message);
-
-	if (Name == TEXT("일론머스크"))
+	if (IconIndex == 0)
 	{
-		MessageWidget->ShowDialogForDuration(nullptr, Name, Message);
+		MessageWidget->ShowDialogForDuration(Icons[0], Name, Message);
 	}
 	else
 	{
-		MessageWidget->ShowDialogForDuration(nullptr, Name, Message);
+		MessageWidget->ShowDialogForDuration(Icons[1], Name, Message);
 	}
 }
