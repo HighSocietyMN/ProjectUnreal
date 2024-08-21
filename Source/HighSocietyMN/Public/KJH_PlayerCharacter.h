@@ -8,6 +8,7 @@
 #include "Kismet/GameplayStatics.h"
 #include "KJH_PlayerCharacter.generated.h"
 
+
 UCLASS()
 class HIGHSOCIETYMN_API AKJH_PlayerCharacter : public ACharacter
 {
@@ -38,45 +39,48 @@ public:
 	class UCameraComponent* TPSCamera;
 
 
-//////////// Enhanced Input 관련 인풋값 시작 ------------------------------------------------------------------------------------------------------
-#pragma region Related to Enhanced Input
+	//////////// Enhanced Input 관련 인풋값 시작 ------------------------------------------------------------------------------------------------------
+	#pragma region Related to Enhanced Input
 
-UPROPERTY(EditAnywhere, Category = Input)
-class UInputMappingContext* IMC_Player;
+	UPROPERTY(EditAnywhere, Category = Input)
+	class UInputMappingContext* IMC_Player;
 
-UPROPERTY(EditAnywhere, Category = Input)
-class UInputAction* IA_Move;
+	UPROPERTY(EditAnywhere, Category = Input)
+	class UInputAction* IA_Move;
 
-UPROPERTY(EditAnywhere, Category = Input)
-class UInputAction* IA_Look;
+	UPROPERTY(EditAnywhere, Category = Input)
+	class UInputAction* IA_Look;
 
-UPROPERTY(EditAnywhere, Category = Input)
-class UInputAction* IA_Jump;
+	UPROPERTY(EditAnywhere, Category = Input)
+	class UInputAction* IA_Jump;
 
-UPROPERTY(EditAnywhere, Category = Input)
-class UInputAction* IA_StartRun;
+	UPROPERTY(EditAnywhere, Category = Input)
+	class UInputAction* IA_StartRun;
 
-UPROPERTY(EditAnywhere, Category = Input)
-class UInputAction* IA_StopRun;
+	UPROPERTY(EditAnywhere, Category = Input)
+	class UInputAction* IA_StopRun;
 
-UPROPERTY(EditAnywhere, Category = Input)
-class UInputAction* IA_Interaction;
+	UPROPERTY(EditAnywhere, Category = Input)
+	class UInputAction* IA_Interaction;
 
-////////// Enhanced Input 관련 인풋값 종료 ------------------------------------------------------------------------------------------------------
+	////////// Enhanced Input 관련 인풋값 종료 ------------------------------------------------------------------------------------------------------
 
-////////// Enhanced Input 관련 함수 시작 --------------------------------------------------------------------------------------------------------
-void OnMyActionMove(const FInputActionValue& Value); // 기본 상하좌우 움직임
-void OnMyActionLook(const FInputActionValue& Value); // 카메라 회전
-void OnMyActionJump(const FInputActionValue& Value); // 점프
+	////////// Enhanced Input 관련 함수 시작 --------------------------------------------------------------------------------------------------------
+	void OnMyActionMove(const FInputActionValue& Value); // 기본 상하좌우 움직임
+	void OnMyActionLook(const FInputActionValue& Value); // 카메라 회전
+	void OnMyActionJump(const FInputActionValue& Value); // 점프
 
-void OnMyActionStartRun(); // 달리기 시작
-void OnMyActionStopRun(); // 달리기 종료
+	void OnMyActionStartRun(); // 달리기 시작
+	void OnMyActionStopRun(); // 달리기 종료
 
-void OnMyActionInteraction(const FInputActionValue& Value); // 인터렉션
+	void OnMyActionInteraction(const FInputActionValue& Value); // 인터렉션
+	void OnMyActionInteractionEnd(); // 인터렉션 종료
 
-bool bIsInteractCrowdCharacter = false;
-bool bIsInteractElonMusk = false;
-bool bIsInteractWarrenBuffett = false;
-
-
+	bool bIsInteractCrowdCharacter = false;
+	bool bIsInteractElonMusk = false;
+	bool bIsInteractWarrenBuffett = false;
+ 
+	// 오디오 캡쳐
+	UPROPERTY(EditAnywhere)
+	class UAudioCaptureComponent* AudioCaptureComp;
 };

@@ -12,6 +12,9 @@
 #include "GameFramework/Character.h"
 #include "../../../../Plugins/EnhancedInput/Source/EnhancedInput/Public/EnhancedInputComponent.h"
 #include "../../../../Plugins/EnhancedInput/Source/EnhancedInput/Public/EnhancedInputSubsystems.h"
+#include "AudioCaptureComponent.h"
+#include "AudioDevice.h"
+#include "Sound/SoundSubmix.h"
 
 // Sets default values
 AKJH_PlayerCharacter::AKJH_PlayerCharacter()
@@ -73,6 +76,8 @@ void AKJH_PlayerCharacter::BeginPlay()
 		}
 	}
 
+	AudioCaptureComp = CreateDefaultSubobject<UAudioCaptureComponent>(TEXT("AudioCaptureComp"));
+	AudioCaptureComp->SetupAttachment(RootComponent);
 }
 
 // Called every frame
@@ -106,8 +111,8 @@ void AKJH_PlayerCharacter::SetupPlayerInputComponent(UInputComponent* PlayerInpu
 	EnhancedInputComponent->BindAction(IA_Jump, ETriggerEvent::Started, this, &AKJH_PlayerCharacter::OnMyActionJump);
 
 	// Interaction 바인딩
-	EnhancedInputComponent->BindAction(IA_Jump, ETriggerEvent::Started, this, &AKJH_PlayerCharacter::OnMyActionInteraction);
-
+	EnhancedInputComponent->BindAction(IA_Interaction, ETriggerEvent::Started, this, &AKJH_PlayerCharacter::OnMyActionInteraction);
+	EnhancedInputComponent->BindAction(IA_Interaction, ETriggerEvent::Completed, this, &AKJH_PlayerCharacter::OnMyActionInteractionEnd);
 }
 
 
@@ -155,6 +160,11 @@ void AKJH_PlayerCharacter::OnMyActionStopRun()
 
 void AKJH_PlayerCharacter::OnMyActionInteraction(const FInputActionValue& Value)
 {
+	AudioCaptureComp->Start();
+
+	USoundSubmix* Submix = NewObject<USoundSubmix>();
+	AudioCaptureComp->SoundSubmix = Submix;
+
 	//// 상호작용 1) 일반 NPC 탐색 (SweepMultiByProfile을 사용하여 블록 처리 탐색)
 	//if (bIsInteractCrowdCharacter && bIsInteractElonMusk && bIsInteractWarrenBuffett) // 이미 다른 상호작용 중이 아니라면
 	//{
@@ -189,5 +199,12 @@ void AKJH_PlayerCharacter::OnMyActionInteraction(const FInputActionValue& Value)
 	//		GEngine->AddOnScreenDebugMessage(-1, 1.f, FColor::Red, TEXT("No Crowd nearby to Interact"));
 	//	}
 	//}
+}
+
+void AKJH_PlayerCharacter::OnMyActionInteractionEnd()
+{
+	AudioCaptureComp->Stop();
+
+
 }
 
