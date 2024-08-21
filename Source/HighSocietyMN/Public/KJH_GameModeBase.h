@@ -34,7 +34,19 @@ public :
 	UPROPERTY()
 	class AHttpActor* HttpActor;
 
+	UFUNCTION(BlueprintCallable)
+	void DelegateMessage(FString Name, FString Message);
+
+	// Message UI
+	UPROPERTY(EditDefaultsOnly, Category = "UI")
+	TSubclassOf<class UMessageWidget> MessageWidgetFactory;
+
+	UPROPERTY()
+	class UMessageWidget* MessageWidget;
+
 	FString URL = TEXT("http://192.168.1.31:8080/api/v1/voices/process");
 	//FString URL = TEXT("http://192.168.1.55:7777/api/v1/voices/process");
 	FString Key = TEXT("GVNFlVhfOqLnclTPI4RZHguMLhgD0fhBxs8jWA8xlolxx3on2NYWMMv7hgbreLsIaBahFY7jaK0Xlto8ZGn0Iw%3D%3D");
+
+	
 };

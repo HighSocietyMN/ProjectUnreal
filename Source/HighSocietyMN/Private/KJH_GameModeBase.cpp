@@ -8,10 +8,19 @@
 #include "AudioDecompress.h"
 #include "Runtime/Engine/Public/AudioDevice.h"
 #include "Serialization/BulkData.h"
+#include "MessageWidget.h"
 
 void AKJH_GameModeBase::BeginPlay()
 {
 	HttpActor = GetWorld()->SpawnActor<AHttpActor>(HttpFactory);
+	HttpActor->OnResPostTextDelegate.AddUObject(this, &AKJH_GameModeBase::DelegateMessage);
+
+	// UI 생성하고 add view port
+	MessageWidget = CreateWidget<UMessageWidget>(GetWorld(), MessageWidgetFactory);
+	if (MessageWidget)
+	{
+		MessageWidget->AddToViewport();
+	}
 
 	// ReqPostMessage("KJH", "Hello World");
 }
@@ -61,4 +70,18 @@ void AKJH_GameModeBase::ReqPostMessage(FString name, FString Message)
 	FString json = UJsonParseLib::MakeJson(studentData);
 
 	//HttpActor->ReqPostText(URL, json);
+}
+
+void AKJH_GameModeBase::DelegateMessage(FString Name, FString Message)
+{
+	UE_LOG(LogTemp, Warning, TEXT("DelegateMessage Name : %s, Message : %s"), *Name, *Message);
+
+	if (Name == TEXT("일론머스크"))
+	{
+		MessageWidget->ShowDialogForDuration(nullptr, Name, Message);
+	}
+	else
+	{
+		MessageWidget->ShowDialogForDuration(nullptr, Name, Message);
+	}
 }

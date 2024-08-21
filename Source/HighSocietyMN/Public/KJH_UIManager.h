@@ -18,7 +18,9 @@ class HIGHSOCIETYMN_API UKJH_UIManager : public UUserWidget
 public:
 
 	virtual void NativeConstruct() override;
-
+	
+	UPROPERTY(EditAnywhere, meta = (BindWidget))
+	class UImage* Recording;
 
 	UPROPERTY(EditAnywhere, meta = (BindWidget))
 	class UImage* BuffetInteractionImage;
@@ -27,7 +29,10 @@ public:
 	class UImage* MuskInteractionImage;
 
 	// 상호작용 UI와 Progress Bar를 제어하는 함수 (상호작용 타입에 따라)
+	UFUNCTION(BlueprintCallable)
+	void UpdateRecordingUI(bool bIsVisible);
+	UFUNCTION(BlueprintCallable)
 	void UpdateInteractionUIForBuffet(bool bIsVisible);
+	UFUNCTION(BlueprintCallable)
 	void UpdateInteractionUIForMusk(bool bIsVisible);
-
 };
