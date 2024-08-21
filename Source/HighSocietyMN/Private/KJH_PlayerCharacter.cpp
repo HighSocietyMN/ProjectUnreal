@@ -76,8 +76,8 @@ void AKJH_PlayerCharacter::BeginPlay()
 		}
 	}
 
-	AudioCaptureComp = CreateDefaultSubobject<UAudioCaptureComponent>(TEXT("AudioCaptureComp"));
-	AudioCaptureComp->SetupAttachment(RootComponent);
+	/*AudioCaptureComp = CreateDefaultSubobject<UAudioCaptureComponent>(TEXT("AudioCaptureComp"));
+	AudioCaptureComp->SetupAttachment(RootComponent);*/
 }
 
 // Called every frame
