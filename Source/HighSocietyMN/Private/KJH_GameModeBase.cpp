@@ -13,7 +13,7 @@ void AKJH_GameModeBase::BeginPlay()
 {
 	HttpActor = GetWorld()->SpawnActor<AHttpActor>(HttpFactory);
 
-	ReqPostMessage("KJH", "Hello World");
+	// ReqPostMessage("KJH", "Hello World");
 }
 
 void AKJH_GameModeBase::SendSoundWaveFile(FString name, const FString& FilePath)
@@ -32,7 +32,7 @@ void AKJH_GameModeBase::SendSoundWaveFile(FString name, const FString& FilePath)
 
 	FString json = UJsonParseLib::MakeJson(studentData);
 
-	HttpActor->ReqPostText(URL, json);
+	HttpActor->ReqPostText(URL, json, AudioData);
 }
 
 bool AKJH_GameModeBase::LoadWavFileToByteArray(const FString& FilePath, TArray<uint8>& OutFileData)
@@ -60,5 +60,5 @@ void AKJH_GameModeBase::ReqPostMessage(FString name, FString Message)
 
 	FString json = UJsonParseLib::MakeJson(studentData);
 
-	HttpActor->ReqPostText(URL, json);
+	//HttpActor->ReqPostText(URL, json);
 }

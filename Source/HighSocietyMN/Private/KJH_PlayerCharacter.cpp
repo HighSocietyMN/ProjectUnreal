@@ -70,8 +70,8 @@ void AKJH_PlayerCharacter::BeginPlay()
 		{
 			if (PlayerController->PlayerCameraManager)
 			{
-				PlayerController->PlayerCameraManager->ViewPitchMin = -70.0f;
-				PlayerController->PlayerCameraManager->ViewPitchMax = 70.0f;
+				PlayerController->PlayerCameraManager->ViewPitchMin = -30.0f;
+				PlayerController->PlayerCameraManager->ViewPitchMax = 30.0f;
 			}
 		}
 	}
