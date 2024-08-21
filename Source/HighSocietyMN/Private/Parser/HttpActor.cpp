@@ -46,6 +46,7 @@ void AHttpActor::ReqPostForm(FString ServerURL, FString form, TArray<uint8>& con
 
 void AHttpActor::ReqPostText(FString ServerURL, FString json, TArray<uint8>& contents)
 {
+	// PlayMediaSound();
 	FHttpModule& httpModule = FHttpModule::Get();
 	httpModule.SetHttpTimeout(360);
 	float timeout = httpModule.GetHttpConnectionTimeout();
@@ -88,9 +89,13 @@ void AHttpActor::OnResPostText(FHttpRequestPtr Request, FHttpResponsePtr Respons
 			FFileHelper::SaveArrayToFile(OutFileData, *FilePath);
 
 			// 저장된 파일을 실행시킨다.
-			PlayMediaSound();
+			//PlayMediaSound();
+			USoundWaveProcedural* SoundWave = CreateSoundWaveProceduralFromWavData(OutFileData);
+			if (SoundWave)
+			{
+				UGameplayStatics::PlaySound2D(GetWorld(), SoundWave);
+			}
 		}
-
 	}
 	else
 	{
