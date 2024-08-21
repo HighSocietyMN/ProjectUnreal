@@ -160,10 +160,10 @@ void AKJH_PlayerCharacter::OnMyActionStopRun()
 
 void AKJH_PlayerCharacter::OnMyActionInteraction(const FInputActionValue& Value)
 {
-	AudioCaptureComp->Start();
+	//AudioCaptureComp->Start();
 
-	USoundSubmix* Submix = NewObject<USoundSubmix>();
-	AudioCaptureComp->SoundSubmix = Submix;
+	//USoundSubmix* Submix = NewObject<USoundSubmix>();
+	//AudioCaptureComp->SoundSubmix = Submix;
 
 	//// 상호작용 1) 일반 NPC 탐색 (SweepMultiByProfile을 사용하여 블록 처리 탐색)
 	//if (bIsInteractCrowdCharacter && bIsInteractElonMusk && bIsInteractWarrenBuffett) // 이미 다른 상호작용 중이 아니라면
@@ -203,7 +203,7 @@ void AKJH_PlayerCharacter::OnMyActionInteraction(const FInputActionValue& Value)
 
 void AKJH_PlayerCharacter::OnMyActionInteractionEnd()
 {
-	AudioCaptureComp->Stop();
+	//AudioCaptureComp->Stop();
 
 
 }
