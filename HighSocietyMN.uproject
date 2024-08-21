@@ -22,14 +22,6 @@
 			]
 		},
 		{
-			"Name": "MetaHuman",
-			"Enabled": true,
-			"SupportedTargetPlatforms": [
-				"Win64",
-				"Linux"
-			]
-		},
-		{
 			"Name": "LiveLinkControlRig",
 			"Enabled": true
 		},
@@ -52,6 +44,10 @@
 			"Name": "ConvAI",
 			"Enabled": true,
 			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/696326c90d80462b8775712d2b6cc2a7"
+		},
+		{
+			"Name": "RigLogic",
+			"Enabled": true
 		}
 	]
 }

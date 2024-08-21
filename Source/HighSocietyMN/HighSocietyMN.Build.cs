@@ -9,7 +9,7 @@ public class HighSocietyMN : ModuleRules
 		PCHUsage = PCHUsageMode.UseExplicitOrSharedPCHs;
 	
 		PublicDependencyModuleNames.AddRange(new string[] { "Core", "CoreUObject", "Engine", "InputCore", "EnhancedInput"
-		, "UMG", "HTTP", "Json", "JsonUtilities" });
+		, "UMG", "HTTP", "Json", "JsonUtilities", "AudioCapture", "SignalProcessing"});
 
 		PrivateDependencyModuleNames.AddRange(new string[] {  });
 
