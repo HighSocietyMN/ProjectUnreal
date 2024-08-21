@@ -17,6 +17,15 @@ class HIGHSOCIETYMN_API AKJH_GameModeBase : public AGameModeBase
 public :
 	virtual void BeginPlay() override;
 
+	//UFUNCTION(BlueprintCallable, Category = "Sound")
+	//void SendSoundWave(FString name, class USoundWave* SoundWave);
+	//
+	UFUNCTION(BlueprintCallable, Category = "Sound")
+	void SendSoundWaveFile(FString name, const FString& FilePath);
+
+	bool LoadWavFileToByteArray(const FString& FilePath, TArray<uint8>& OutFileData);
+	//bool ConvertSoundWaveToByteArray(USoundWave* SoundWave, TArray<uint8>& OutAudioData);
+
 	void ReqPostMessage(FString name, FString Message);
 	
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Http")

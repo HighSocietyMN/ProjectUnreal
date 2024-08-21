@@ -12,9 +12,9 @@
 #include "GameFramework/Character.h"
 #include "../../../../Plugins/EnhancedInput/Source/EnhancedInput/Public/EnhancedInputComponent.h"
 #include "../../../../Plugins/EnhancedInput/Source/EnhancedInput/Public/EnhancedInputSubsystems.h"
-#include "AudioCaptureComponent.h"
-#include "AudioDevice.h"
-#include "Sound/SoundSubmix.h"
+//#include "AudioCaptureComponent.h"
+//#include "AudioDevice.h"
+//#include "Sound/SoundSubmix.h"
 
 // Sets default values
 AKJH_PlayerCharacter::AKJH_PlayerCharacter()
