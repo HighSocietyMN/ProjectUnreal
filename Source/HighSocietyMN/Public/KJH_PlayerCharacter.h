@@ -91,10 +91,10 @@ UPROPERTY(EditAnywhere)
 class USoundWave* FootStepSound; // 발자국 소리
 
 UPROPERTY(EditAnywhere)
-float WalkFootStepInterval = 0.5f; // 걷기 시 발자국 소리가 재생되는 간격
+float WalkFootStepInterval = 0.65f; // 걷기 시 발자국 소리가 재생되는 간격
 
 UPROPERTY(EditAnywhere)
-float RunFootStepInterval = 0.30f; // 달리기 시 발자국 소리가 재생되는 간격
+float RunFootStepInterval = 0.40f; // 달리기 시 발자국 소리가 재생되는 간격
 
 UPROPERTY(EditAnywhere)
 float FootStepInterval; // 현재 발자국 소리 재생 간격

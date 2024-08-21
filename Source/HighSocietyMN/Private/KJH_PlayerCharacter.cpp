@@ -50,8 +50,6 @@ AKJH_PlayerCharacter::AKJH_PlayerCharacter()
 	TPSCamera->SetRelativeLocation(FVector(125, 50, 70));
 	TPSCamera->SetFieldOfView(90.0f);
 
-	// 사운드 관련 처리를 위한 초기값 설정 (FootStep Sound)
-	FootStepInterval = WalkFootStepInterval; 	// 기본적으로 걷기 간격을 초기값으로 설정
 }
 
 // Called when the game starts or when spawned
@@ -59,6 +57,9 @@ void AKJH_PlayerCharacter::BeginPlay()
 {
 	Super::BeginPlay();
 	
+	// 사운드 관련 처리를 위한 초기값 설정 (FootStep Sound)
+	FootStepInterval = WalkFootStepInterval; 	// 기본적으로 걷기 간격을 초기값으로 설정
+
 	// Enhanced Input Mapping Context 바인딩 
 	if (APlayerController* PlayerController = Cast<APlayerController>(Controller))
 	{
