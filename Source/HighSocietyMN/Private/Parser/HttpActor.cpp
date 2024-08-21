@@ -14,17 +14,34 @@ AHttpActor::AHttpActor()
 
 }
 
-void AHttpActor::ReqPostText(FString ServerURL, FString json)
+void AHttpActor::ReqPostForm(FString ServerURL, FString form, TArray<uint8>& contents)
+{
+	// 폼 형식으로 전달
+	FHttpModule& httpModule = FHttpModule::Get();
+	TSharedRef<IHttpRequest> req = httpModule.CreateRequest();
+	req->SetURL(ServerURL);
+	req->SetVerb(TEXT("POST"));
+	
+	req->SetHeader(TEXT("content-type"), TEXT("application/x-www-form-urlencoded"));
+	req->SetContentAsString(form);
+
+	req->OnProcessRequestComplete().BindUObject(this, &AHttpActor::OnResPostText);
+}
+
+void AHttpActor::ReqPostText(FString ServerURL, FString json, TArray<uint8>& contents)
 {
 	FHttpModule& httpModule = FHttpModule::Get();
 	TSharedRef<IHttpRequest> req = httpModule.CreateRequest();
 	req->SetURL(ServerURL);
 	req->SetVerb(TEXT("POST"));
+	/*req->SetHeader(TEXT("content-type"), TEXT("audio/wav"));
+	req->SetContent(contents);*/
+
 	req->SetHeader(TEXT("content-type"), TEXT("application/json"));
 	req->SetContentAsString(json);
 
 	UE_LOG(LogTemp, Warning, TEXT("ReqPostText... %s"), *json);
-
+	// UE_LOG(LogTemp, Warning, TEXT("ReqPostText..."));
 	req->OnProcessRequestComplete().BindUObject(this, &AHttpActor::OnResPostText);
 	req->ProcessRequest();
 }

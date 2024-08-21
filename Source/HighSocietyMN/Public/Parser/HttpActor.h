@@ -25,7 +25,8 @@ public:
 	UPROPERTY()
 	class UHttpUserWidget* HttpUI;*/
 
-	void ReqPostText(FString ServerURL, FString json);
+	void ReqPostForm(FString ServerURL, FString form, TArray<uint8>& contents);
+	void ReqPostText(FString ServerURL, FString json, TArray<uint8>& contents);
 	void OnResPostText(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
 
 	FOnResPostTextDelegate OnResPostTextDelegate;
