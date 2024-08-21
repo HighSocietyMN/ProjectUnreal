@@ -52,6 +52,16 @@
 			"Name": "ConvAI",
 			"Enabled": true,
 			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/696326c90d80462b8775712d2b6cc2a7"
+		},
+		{
+			"Name": "RuntimeAudioImporter",
+			"Enabled": true,
+			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/186998d72e2a495b8bfc65e74ea1f6a9"
+		},
+		{
+			"Name": "RuntimeSpeechRecognizer",
+			"Enabled": true,
+			"MarketplaceURL": "com.epicgames.launcher://ue/marketplace/product/2b33311abdb048819664a6cfe0bbd90d"
 		}
 	]
 }
