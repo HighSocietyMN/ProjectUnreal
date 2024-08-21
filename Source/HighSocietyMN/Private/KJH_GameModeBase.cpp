@@ -8,16 +8,26 @@
 #include "AudioDecompress.h"
 #include "Runtime/Engine/Public/AudioDevice.h"
 #include "Serialization/BulkData.h"
+#include "MessageWidget.h"
 
 void AKJH_GameModeBase::BeginPlay()
 {
 	HttpActor = GetWorld()->SpawnActor<AHttpActor>(HttpFactory);
+	HttpActor->OnResPostTextDelegate.AddUObject(this, &AKJH_GameModeBase::DelegateMessage);
+
+	// UI 생성하고 add view port
+	MessageWidget = CreateWidget<UMessageWidget>(GetWorld(), MessageWidgetFactory);
+	if (MessageWidget)
+	{
+		MessageWidget->AddToViewport();
+	}
 
 	// ReqPostMessage("KJH", "Hello World");
 }
 
-void AKJH_GameModeBase::SendSoundWaveFile(FString name, const FString& FilePath)
+void AKJH_GameModeBase::SendSoundWaveFile(int32 index, FString name, const FString& FilePath)
 {
+	IconIndex = index;
 	TArray<uint8> AudioData;
 	if (!LoadWavFileToByteArray(FPaths::ProjectSavedDir() / FilePath, AudioData))
 	{
@@ -61,4 +71,17 @@ void AKJH_GameModeBase::ReqPostMessage(FString name, FString Message)
 	FString json = UJsonParseLib::MakeJson(studentData);
 
 	//HttpActor->ReqPostText(URL, json);
+}
+
+void AKJH_GameModeBase::DelegateMessage(FString Name, FString Message)
+{
+	UE_LOG(LogTemp, Warning, TEXT("DelegateMessage Name : %s, Message : %s"), *Name, *Message);
+	if (IconIndex == 0)
+	{
+		MessageWidget->ShowDialogForDuration(Icons[0], Name, Message);
+	}
+	else
+	{
+		MessageWidget->ShowDialogForDuration(Icons[1], Name, Message);
+	}
 }

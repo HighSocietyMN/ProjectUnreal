@@ -95,6 +95,8 @@ void AHttpActor::OnResPostText(FHttpRequestPtr Request, FHttpResponsePtr Respons
 			{
 				UGameplayStatics::PlaySound2D(GetWorld(), SoundWave);
 			}
+
+			OnResPostTextDelegate.Broadcast(Name, Message);
 		}
 	}
 	else
