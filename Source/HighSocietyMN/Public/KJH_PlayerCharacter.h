@@ -76,11 +76,16 @@ public:
 	void OnMyActionInteraction(const FInputActionValue& Value); // 인터렉션
 	void OnMyActionInteractionEnd(); // 인터렉션 종료
 
-	bool bIsInteractCrowdCharacter = false;
-	bool bIsInteractElonMusk = false;
-	bool bIsInteractWarrenBuffett = false;
  
 	// 오디오 캡쳐
 	UPROPERTY(EditAnywhere)
 	class UAudioCaptureComponent* AudioCaptureComp;
+
+
+	UPROPERTY(EditAnywhere)
+	// 게임 인스턴스 관련
+	class UKJH_UIManager* UIManager; // UI매니저를 꺼내오기 위한 클래스
+
+
+
 };

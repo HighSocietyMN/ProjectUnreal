@@ -10,8 +10,10 @@
 #include "Components/StaticMeshComponent.h"
 #include "Components/CapsuleComponent.h"
 #include "GameFramework/Character.h"
+#include "KJH_UIManager.h"
 #include "../../../../Plugins/EnhancedInput/Source/EnhancedInput/Public/EnhancedInputComponent.h"
 #include "../../../../Plugins/EnhancedInput/Source/EnhancedInput/Public/EnhancedInputSubsystems.h"
+#include "NPCCharacter.h"
 //#include "AudioCaptureComponent.h"
 //#include "AudioDevice.h"
 //#include "Sound/SoundSubmix.h"
@@ -85,7 +87,55 @@ void AKJH_PlayerCharacter::Tick(float DeltaTime)
 {
 	Super::Tick(DeltaTime);
 
+	////////// 근처에 상호작용 가능한 사물이 있으면 UI를 띄우기 위해 오브젝트 탐색 및 UI 업데이트 구간 시작 -------------------------------------------------------------------------
+	// 상호작용 가능 오브젝트 탐색 및 UI 업데이트
+	float InteractBoxRange = 200.0f; // 상호작용 범위 설정
+	FVector PlayerLocation = GetActorLocation(); // 플레이어의 현재 위치
 
+	// 주변 반경 내 모든 액터 탐색
+	TArray<FHitResult> HitResults;
+	FCollisionShape CollisionShape;
+	CollisionShape.SetSphere(InteractBoxRange); // 구 형태의 충돌 영역
+
+	// 1) AmmoBox와 GrenadeBox 탐색 구간을 하나로 통합함. Ammo Box Class에서 Enum Class로 구분할 수 있게 설정해놓음.
+	HitResults.Empty();
+	bool bIsCharacterNearby = GetWorld()->SweepMultiByProfile(HitResults, PlayerLocation, PlayerLocation, FQuat::Identity, TEXT("Buffet"), CollisionShape);
+
+	if (bIsCharacterNearby)
+	{
+		for (const FHitResult& Hit : HitResults)
+		{
+			ANPCCharacter* OverlappingBoxActor = Cast<ANPCCharacter>(Hit.GetActor());
+			if (OverlappingBoxActor)
+			{
+				// AmmoBox 일 경우,
+				if (OverlappingBoxActor->CharacterType == ECharacterType::Buffet)
+				{
+					if (UIManager)
+					{
+						UIManager->UpdateInteractionUIForBuffet(true); // AmmoBox UI 표시
+					}
+					return;
+				}
+				// GrenadeBox 일 경우,
+				else if (OverlappingBoxActor->CharacterType == ECharacterType::Musk)
+				{
+					if (UIManager)
+					{
+						UIManager->UpdateInteractionUIForMusk(true); // GrenadeBox UI 표시
+					}
+					return;
+				}
+			}
+		}
+	}
+
+	// 박스가 범위 내에 없다면 UI 숨기기
+	if (UIManager)
+	{
+			UIManager->UpdateInteractionUIForBuffet(false); 
+			UIManager->UpdateInteractionUIForMusk(false); 
+	}
 
 }
 
