@@ -8,7 +8,7 @@
 #include "Serialization/JsonReader.h"
 #include "Serialization/JsonWriter.h"
 
-FString UJsonParseLib::JsonParse(const FString& json)
+bool UJsonParseLib::JsonParse(const FString& json, FString& Name, FString& Message, TArray<uint8>& OutFileData)
 {
 	FString resultValue;
 
@@ -16,19 +16,14 @@ FString UJsonParseLib::JsonParse(const FString& json)
 	TSharedPtr<FJsonObject> result = MakeShareable(new FJsonObject);
 	if (FJsonSerializer::Deserialize(reader, result))
 	{
-		TArray<TSharedPtr<FJsonValue>> parseDataList = result->GetArrayField(TEXT("items"));
+		Name = result->GetStringField(TEXT("characterName"));
+		FString VoiceData = result->GetStringField(TEXT("characterVoiceData"));
+		Message = result->GetStringField(TEXT("characterText"));
 
-		for (auto data : parseDataList)
-		{
-			TSharedPtr<FJsonObject> parseData = data->AsObject();
-			FString bookName = parseData->GetStringField(TEXT("bk_nm"));
-			FString authorName = parseData->GetStringField(TEXT("aut_nm"));
-
-			resultValue.Append(FString::Printf(TEXT("Book Name: %s / Author Name: %s\n"), *bookName, *authorName));
-		}
+		FBase64::Decode(VoiceData, OutFileData);
 	}
 
-	return resultValue;
+	return true;
 }
 
 FString UJsonParseLib::MakeJson(const TMap<FString, FString> Sources)

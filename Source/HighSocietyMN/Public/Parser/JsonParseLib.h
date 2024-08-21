@@ -15,6 +15,6 @@ class HIGHSOCIETYMN_API UJsonParseLib : public UBlueprintFunctionLibrary
 	GENERATED_BODY()
 
 public:
-	static FString JsonParse(const FString& json);
+	static bool JsonParse(const FString& json, FString& Name, FString& Message, TArray<uint8>& OutFileData);
 	static FString MakeJson(const TMap<FString, FString> Sources);
 };
