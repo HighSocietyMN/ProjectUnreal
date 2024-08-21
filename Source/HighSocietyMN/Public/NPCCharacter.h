@@ -6,6 +6,16 @@
 #include "GameFramework/Character.h"
 #include "NPCCharacter.generated.h"
 
+
+// 구분을 위해 EnumClass 로 AmmoBox와 GrenadeBox 구분
+UENUM(BlueprintType)
+enum class ECharacterType : uint8
+{
+    Buffet UMETA(DisplayName = "Buffet"),
+    Musk UMETA(DisplayName = "Musk")
+};
+
+
 UCLASS()
 class HIGHSOCIETYMN_API ANPCCharacter : public ACharacter
 {
@@ -28,4 +38,10 @@ public:
 
 	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "NPC")
 	FString NpcName;
+
+
+		// 구분을 위해 EnumClass 로 AmmoBox와 GrenadeBox 구분
+	UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Character Type")
+	ECharacterType CharacterType;
+
 };

@@ -10,7 +10,11 @@
 			"LoadingPhase": "Default",
 			"AdditionalDependencies": [
 				"Engine",
+<<<<<<< HEAD
 				"UMGEditor"
+=======
+				"UMG"
+>>>>>>> origin/main
 			]
 		}
 	],
