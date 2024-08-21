@@ -88,15 +88,7 @@ void AHttpActor::OnResPostText(FHttpRequestPtr Request, FHttpResponsePtr Respons
 			FFileHelper::SaveArrayToFile(OutFileData, *FilePath);
 
 			// 저장된 파일을 실행시킨다.
-
-			// Load wav file
-			USoundWaveProcedural* SoundWave = CreateSoundWaveProceduralFromWavData(OutFileData);
-			if (SoundWave)
-			{
-				// 사운드 재생
-				UGameplayStatics::PlaySound2D(GetWorld(), SoundWave);
-				UE_LOG(LogTemp, Warning, TEXT("PlaySound2D Success..."));
-			}
+			PlayMediaSound();
 		}
 
 	}

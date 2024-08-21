@@ -32,4 +32,7 @@ public:
 	class USoundWaveProcedural* CreateSoundWaveProceduralFromWavData(const TArray<uint8>& RawWavData);
 
 	FOnResPostTextDelegate OnResPostTextDelegate;
+
+	UFUNCTION(BlueprintImplementableEvent)
+	void PlayMediaSound();
 };
