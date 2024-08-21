@@ -28,6 +28,8 @@ public:
 	void ReqPostForm(FString ServerURL, FString form, TArray<uint8>& contents);
 	void ReqPostText(FString ServerURL, FString json, TArray<uint8>& contents);
 	void OnResPostText(FHttpRequestPtr Request, FHttpResponsePtr Response, bool bWasSuccessful);
+	
+	class USoundWaveProcedural* CreateSoundWaveProceduralFromWavData(const TArray<uint8>& RawWavData);
 
 	FOnResPostTextDelegate OnResPostTextDelegate;
 };
